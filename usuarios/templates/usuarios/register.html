@@ -1,0 +1,181 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Crear Cuenta</title>
+
+    <!-- Custom fonts -->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+
+    <!-- SB Admin 2 CSS -->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+
+                    <div class="col-lg-7">
+                        <div class="p-5">
+
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">¡Crea una cuenta!</h1>
+                            </div>
+
+                            <!-- MENSAJES GENERALES (contraseñas, usuario ya existe, etc.) -->
+                             {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    <ul class="mb-0">
+                                        {% for field in form %}
+                                            {% for error in field.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        {% endfor %}
+                                        {% for error in form.non_field_errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+
+                            {% if messages %}
+                                {% for msg in messages %}
+                                    <div class="alert alert-danger text-center">{{ msg }}</div>
+                                {% endfor %}
+                            {% endif %}
+
+                            <!-- FORMULARIO REGISTRO -->
+                            <form class="user" method="POST">
+                                {% csrf_token %}
+
+                                <!-- FILA 1 -->
+                                <div class="form-group row">
+
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" name="username" class="form-control form-control-user"
+                                            placeholder="Nombre de usuario" required>
+                                        {% for error in form.username.errors %}
+                                            <small class="text-danger">{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <input type="text" name="identification" class="form-control form-control-user"
+                                            placeholder="Identificación ej. CC 1000547852" required>
+                                        {% for error in form.identification.errors %}
+                                            <small class="text-danger">{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+
+                                </div>
+
+                                <!-- FILA 2 -->
+                                <div class="form-group row">
+
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" name="first_name" class="form-control form-control-user"
+                                            placeholder="Nombres" required>
+                                        {% for error in form.first_name.errors %}
+                                            <small class="text-danger">{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <input type="text" name="last_name" class="form-control form-control-user"
+                                            placeholder="Apellidos" required>
+                                        {% for error in form.last_name.errors %}
+                                            <small class="text-danger">{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+
+                                </div>
+
+                                <!-- FILA 3 -->
+                                <div class="form-group row">
+
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="email" name="email" class="form-control form-control-user"
+                                            placeholder="usuario@example.com" required>
+                                        {% for error in form.email.errors %}
+                                            <small class="text-danger">{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <input type="text" name="cellphonenumber" class="form-control form-control-user"
+                                            placeholder="celular (ej. 3208885588)" required minlength="10">
+                                        {% for error in form.cellphonenumber.errors %}
+                                            <small class="text-danger">{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+
+                                </div>
+
+                                <!-- FILA 4 -->
+                                <div class="form-group row">
+
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="password" name="password1" class="form-control form-control-user"
+                                            placeholder="Contraseña" required minlength="8" 
+                                            pattern="[a-zA-Z0-9$#%.&?]+">
+                                        {% for error in form.password1.errors %}
+                                            <small class="text-danger">{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <input type="password" name="password2" class="form-control form-control-user"
+                                            placeholder="Repite tu contraseña" required minlength="8" 
+                                            pattern="[a-zA-Z0-9$#%.&?]+">
+                                        {% for error in form.password2.errors %}
+                                            <small class="text-danger">{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+
+                                </div>
+
+                                <button class="btn btn-primary btn-user btn-block" type="submit">
+                                    Crear cuenta
+                                </button>
+
+                            </form>
+
+                            <hr>
+
+                            <div class="text-center">
+                                <a class="small" href="{% url 'login' %}">¿Ya tienes cuenta? ¡Inicia sesión!</a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JS -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+</body>
+
+</html>

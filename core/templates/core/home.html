@@ -1,0 +1,96 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>IntegraServicios - Home</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700,900" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        {% include 'core/sidebar.html' %}
+        <!-- End Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                {% include 'core/topbar.html' %}
+                <!-- End Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <h1 class="h3 mb-4 text-gray-800">Home</h1>
+
+                    <p>Bienvenido a IntegraServicios.</p>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End Main Content -->
+
+            <!-- Footer -->
+            {% include 'core/footer.html' %}
+            <!-- End Footer -->
+
+        </div>
+        <!-- End Content Wrapper -->
+
+    </div>
+    <!-- End Page Wrapper -->
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+
+    <div class="row">
+        {% for recurso in recursos %}
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card shadow">
+                <img src="{{ recurso.foto.url }}" class="card-img-top" alt="{{ recurso.nombre }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ recurso.nombre }}</h5>
+                    <p class="card-text">{{ recurso.descripcion }}</p>
+                    <span class="badge badge-info">{{ recurso.get_estado_display }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+</body>
+
+</html>
