@@ -18,8 +18,8 @@ Virtualenv
 
 🧩 Instalación del entorno local
 1️⃣ Clonar el repositorio
-  git clone https://github.com/TU-USUARIO/TU-REPO.git
-  cd TU-REPO
+  git clone https://github.com/yf01-web/Integraservicios.git
+  cd Integraservicios
   
 2️⃣ Crear un entorno virtual
 python -m venv venv
