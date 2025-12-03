@@ -1,96 +1,276 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block title %}IntegraServicios - Sistema de Préstamo de Recursos{% endblock %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>IntegraServicios - Home</title>
-
-    <!-- Custom fonts for this template-->
-    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700,900" rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
-</head>
-
-<body id="page-top">
-
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-
-        <!-- Sidebar -->
-        {% include 'core/sidebar.html' %}
-        <!-- End Sidebar -->
-
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
-            <div id="content">
-
-                <!-- Topbar -->
-                {% include 'core/topbar.html' %}
-                <!-- End Topbar -->
-
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    <h1 class="h3 mb-4 text-gray-800">Home</h1>
-
-                    <p>Bienvenido a IntegraServicios.</p>
-
-                </div>
-                <!-- /.container-fluid -->
-
+{% block content %}
+<!-- Hero Section -->
+<div class="container-fluid px-0">
+    <div class="jumbotron jumbotron-fluid bg-primary text-white mb-5">
+        <div class="container text-center py-5">
+            <h1 class="display-4">Sistema de Préstamo de Recursos Universitarios</h1>
+            <p class="lead">Reserva salones, auditorios, laboratorios y más recursos de forma fácil y rápida</p>
+            
+            {% if not user.is_authenticated %}
+            <div class="mt-4">
+                <a href="{% url 'register' %}" class="btn btn-light btn-lg mr-3">
+                    <i class="fas fa-user-plus mr-2"></i>Regístrate Gratis
+                </a>
+                <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
+                </a>
             </div>
-            <!-- End Main Content -->
-
-            <!-- Footer -->
-            {% include 'core/footer.html' %}
-            <!-- End Footer -->
-
+            {% else %}
+            <div class="mt-4">
+                <a href="{% url 'dashboard' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-tachometer-alt mr-2"></i>Ir a Mi Dashboard
+                </a>
+            </div>
+            {% endif %}
         </div>
-        <!-- End Content Wrapper -->
-
     </div>
-    <!-- End Page Wrapper -->
+</div>
 
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-
-    <div class="row">
-        {% for recurso in recursos %}
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card shadow">
-                <img src="{{ recurso.foto.url }}" class="card-img-top" alt="{{ recurso.nombre }}">
+<!-- Stats Section -->
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-md-3 text-center">
+            <div class="card border-0 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">{{ recurso.nombre }}</h5>
-                    <p class="card-text">{{ recurso.descripcion }}</p>
-                    <span class="badge badge-info">{{ recurso.get_estado_display }}</span>
+                    <h2 class="text-primary">{{ total_recursos }}</h2>
+                    <p class="text-muted">Recursos Totales</p>
                 </div>
+            </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h2 class="text-success">{{ recursos_disponibles }}</h2>
+                    <p class="text-muted">Disponibles Ahora</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h2 class="text-info">{{ unidades|length }}</h2>
+                    <p class="text-muted">Unidades de Servicio</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h2 class="text-warning">{{ tipos_recurso|length }}</h2>
+                    <p class="text-muted">Tipos de Recursos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recursos Destacados -->
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="mb-4">Recursos Disponibles</h2>
+            
+            {% if recursos %}
+            <div class="row">
+                {% for recurso in recursos %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm border-0 hover-shadow">
+                        <div class="card-header bg-white border-0 pb-0">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge badge-success">Disponible</span>
+                                <small class="text-muted">
+                                    <i class="fas fa-building mr-1"></i>
+                                    {{ "Sin unidad" }}
+                                </small>
+                            </div>
+                        </div>
+                        
+                        {% if recurso.foto %}
+                        <img src="{{ recurso.foto.url }}" class="card-img-top" alt="{{ recurso.nombre }}" 
+                             style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
+                             style="height: 200px;">
+                            <i class="fas fa-image fa-3x text-muted"></i>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="card-body">
+                            <h5 class="card-title">{{ recurso.nombre }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                <i class="fas fa-tag mr-1"></i>
+                                {{ a }}
+                            </h6>
+                            <p class="card-text text-truncate" title="{{ recurso.descripcion }}">
+                                {{ recurso.descripcion|truncatechars:100 }}
+                            </p>
+                            
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div>
+                                    {% if recurso.estado == 'D' %}
+                                    <span class="badge badge-success">Disponible</span>
+                                    {% elif recurso.estado == 'O' %}
+                                    <span class="badge badge-danger">Ocupado</span>
+                                    {% elif recurso.estado == 'M' %}
+                                    <span class="badge badge-warning">Mantenimiento</span>
+                                    {% endif %}
+                                </div>
+                                
+                                {% if user.is_authenticated and user.perfilusuario.es_cliente and recurso.estado == 'D' %}
+                                <a href="#" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-calendar-plus mr-1"></i>Reservar
+                                </a>
+                                {% elif not user.is_authenticated %}
+                                <a href="{% url 'login' %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-sign-in-alt mr-1"></i>Inicia sesión
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer bg-white border-0">
+                            <small class="text-muted">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                ID: {{ recurso.idRecurso }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            {% if recursos|length >= 6 %}
+            <div class="text-center mt-4">
+                <a href="#" class="btn btn-outline-primary">
+                    <i class="fas fa-search mr-2"></i>Ver Todos los Recursos
+                </a>
+            </div>
+            {% endif %}
+            
+            {% else %}
+            <div class="alert alert-info text-center">
+                <i class="fas fa-info-circle fa-2x mb-3"></i>
+                <h4>No hay recursos disponibles en este momento</h4>
+                <p>Pronto agregaremos nuevos recursos al sistema.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Cómo Funciona -->
+<div class="container-fluid bg-light py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2>¿Cómo Funciona?</h2>
+                <p class="lead">Sigue estos simples pasos para usar nuestros recursos</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3 text-center mb-4">
+                <div class="bg-white rounded-circle p-4 mx-auto shadow-sm" style="width: 120px; height: 120px;">
+                    <i class="fas fa-user-plus fa-3x text-primary"></i>
+                </div>
+                <h4 class="mt-3">1. Regístrate</h4>
+                <p>Crea tu cuenta como cliente en menos de 2 minutos</p>
+            </div>
+            
+            <div class="col-md-3 text-center mb-4">
+                <div class="bg-white rounded-circle p-4 mx-auto shadow-sm" style="width: 120px; height: 120px;">
+                    <i class="fas fa-search fa-3x text-primary"></i>
+                </div>
+                <h4 class="mt-3">2. Busca</h4>
+                <p>Encuentra el recurso que necesitas y verifica disponibilidad</p>
+            </div>
+            
+            <div class="col-md-3 text-center mb-4">
+                <div class="bg-white rounded-circle p-4 mx-auto shadow-sm" style="width: 120px; height: 120px;">
+                    <i class="fas fa-calendar-check fa-3x text-primary"></i>
+                </div>
+                <h4 class="mt-3">3. Reserva</h4>
+                <p>Selecciona fecha y hora para tu reserva</p>
+            </div>
+            
+            <div class="col-md-3 text-center mb-4">
+                <div class="bg-white rounded-circle p-4 mx-auto shadow-sm" style="width: 120px; height: 120px;">
+                    <i class="fas fa-check-circle fa-3x text-primary"></i>
+                </div>
+                <h4 class="mt-3">4. Disfruta</h4>
+                <p>Usa el recurso en el horario reservado</p>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'how_work' %}" class="btn btn-outline-primary">
+                <i class="fas fa-play-circle mr-2"></i>Ver Tutorial Completo
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Tipos de Recursos -->
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12 text-center mb-5">
+            <h2>Tipos de Recursos</h2>
+            <p class="lead">Diversidad de espacios para tus necesidades</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        {% for tipo in tipos_recurso %}
+        <div class="col-md-3 col-6 mb-4">
+            <div class="card border-0 text-center h-100">
+                <div class="card-body">
+                    <div class="bg-primary text-white rounded-circle p-3 mx-auto mb-3" 
+                         style="width: 80px; height: 80px;">
+                        <i class="fas 
+                            {% if 'salon' in tipo.nombre.lower %}fa-chalkboard-teacher
+                            {% elif 'auditorio' in tipo.nombre.lower %}fa-theater-masks
+                            {% elif 'laboratorio' in tipo.nombre.lower %}fa-flask
+                            {% elif 'cancha' in tipo.nombre.lower %}fa-futbol
+                            {% elif 'computo' in tipo.nombre.lower %}fa-laptop
+                            {% else %}fa-box{% endif %}
+                            fa-2x">
+                        </i>
+                    </div>
+                    <h5>{{ tipo.nombre }}</h5>
+                    <p class="text-muted small">{{ tipo.descripcion|truncatechars:80 }}</p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-warning text-center">
+                No hay tipos de recursos registrados aún.
             </div>
         </div>
         {% endfor %}
     </div>
-    
-    <!-- Bootstrap core JavaScript-->
-    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</div>
 
-    <!-- Core plugin JavaScript-->
-    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-
-</body>
-
-</html>
+<!-- Call to Action -->
+<div class="container-fluid bg-primary text-white py-5">
+    <div class="container text-center">
+        <h2 class="mb-4">¿Listo para empezar?</h2>
+        <p class="lead mb-4">Únete a nuestra comunidad y accede a los mejores recursos universitarios</p>
+        
+        {% if not user.is_authenticated %}
+        <a href="{% url 'register' %}" class="btn btn-light btn-lg">
+            <i class="fas fa-rocket mr-2"></i>Comenzar Ahora
+        </a>
+        {% else %}
+        <a href="{% url 'dashboard' %}" class="btn btn-light btn-lg">
+            <i class="fas fa-tachometer-alt mr-2"></i>Ir a Mi Panel
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

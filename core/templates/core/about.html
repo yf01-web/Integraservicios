@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Acerca de - IntegraServicios{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="mb-4">Acerca de IntegraServicios</h1>
+            
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h3 class="card-title text-primary">Nuestra Misión</h3>
+                    <p class="card-text">
+                        Facilitar el acceso y gestión de recursos interuniversitarios mediante una plataforma 
+                        intuitiva y eficiente que optimice los procesos de reserva, préstamo y devolución.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h3 class="card-title text-primary">¿Qué Ofrecemos?</h3>
+                    <ul>
+                        <li>Sistema centralizado de gestión de recursos</li>
+                        <li>Reservas en tiempo real con validación de disponibilidad</li>
+                        <li>Control de préstamos y devoluciones</li>
+                        <li>Sistema de calificación de servicios</li>
+                        <li>Reportes y estadísticas para administradores</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="{% url 'home' %}" class="btn btn-primary">
+                    <i class="fas fa-home mr-2"></i>Volver al Inicio
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

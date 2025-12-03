@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cómo Funciona - IntegraServicios{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="mb-4 text-center">Cómo Funciona IntegraServicios</h1>
+            
+            {% for paso in pasos %}
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mr-4" 
+                             style="width: 60px; height: 60px;">
+                            <h3 class="mb-0">{{ paso.numero }}</h3>
+                        </div>
+                        <div>
+                            <h4 class="card-title text-primary">{{ paso.titulo }}</h4>
+                            <p class="card-text">{{ paso.descripcion }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+            <div class="alert alert-info mt-4">
+                <h5><i class="fas fa-info-circle mr-2"></i>Importante</h5>
+                <p class="mb-0">
+                    Las reservas deben realizarse dentro del horario de disponibilidad del recurso 
+                    y respetando la granularidad mínima de tiempo establecida por cada unidad.
+                </p>
+            </div>
+            
+            <div class="text-center mt-5">
+                {% if not user.is_authenticated %}
+                <a href="{% url 'register' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-user-plus mr-2"></i>Regístrate y Comienza
+                </a>
+                {% else %}
+                <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-tachometer-alt mr-2"></i>Ir a Mi Dashboard
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
