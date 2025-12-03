@@ -1,31 +1,148 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+    
+    <!-- Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'home' %}">
         <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+            <i class="fas fa-exchange-alt"></i>
         </div>
         <div class="sidebar-brand-text mx-3">IntegraServicios</div>
     </a>
-
+    
     <hr class="sidebar-divider my-0">
-
+    
     <!-- Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="/">
+    <li class="nav-item {% if request.path == '/' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'home' %}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
     </li>
-
+    
     <hr class="sidebar-divider">
-    <div class="sidebar-heading">Gestión</div>
-
+    
+    <!-- ===== SECCIÓN ADMINISTRADOR ===== -->
+    {% if user.is_authenticated and user.perfilusuario.es_administrador %}
+    <div class="sidebar-heading">Administración</div>
+    
     <li class="nav-item">
         <a class="nav-link" href="#">
             <i class="fas fa-users"></i>
-            <span>Usuarios</span>
+            <span>Gestión de Usuarios</span>
         </a>
     </li>
-
+    
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-boxes"></i>
+            <span>Gestión de Recursos</span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-building"></i>
+            <span>Unidades de Servicio</span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-chart-bar"></i>
+            <span>Reportes</span>
+        </a>
+    </li>
+    {% endif %}
+    
+    <!-- ===== SECCIÓN EMPLEADO ===== -->
+    {% if user.is_authenticated and user.perfilusuario.es_empleado %}
+    <div class="sidebar-heading">Operaciones</div>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-handshake"></i>
+            <span>Registrar Préstamo</span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-undo"></i>
+            <span>Registrar Devolución</span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-calendar-check"></i>
+            <span>Reservas del Día</span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-list"></i>
+            <span>Préstamos Activos</span>
+        </a>
+    </li>
+    {% endif %}
+    
+    <!-- ===== SECCIÓN CLIENTE ===== -->
+    {% if user.is_authenticated and user.perfilusuario.es_cliente %}
+    <div class="sidebar-heading">Mis Reservas</div>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-calendar-plus"></i>
+            <span>Nueva Reserva</span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-history"></i>
+            <span>Historial de Reservas</span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-star"></i>
+            <span>Calificar Servicios</span>
+        </a>
+    </li>
+    {% endif %}
+    
+    <!-- ===== SECCIÓN GENERAL (todos los autenticados) ===== -->
+    {% if user.is_authenticated %}
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">Mi Cuenta</div>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-user-circle"></i>
+            <span>Mi Perfil</span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-key"></i>
+            <span>Cambiar Contraseña</span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Cerrar Sesión</span>
+        </a>
+    </li>
+    {% endif %}
+    
+    <hr class="sidebar-divider d-none d-md-block">
+    
+    <!-- Toggle Sidebar -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
 </ul>

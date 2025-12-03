@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from .models import PerfilUsuario, Rol
 from .forms import RegistroForm
+from django.contrib.auth import logout
 
 
 def register_view(request):
@@ -45,39 +46,6 @@ def register_view(request):
     return render(request, "usuarios/register.html", {"form": form})
 
 
-# def register_view(request):
-#     if request.method == "POST":
-#         form = RegistroForm(request.POST)
-
-#         if form.is_valid():
-#             user = User.objects.create_user(
-#                 username=form.cleaned_data["username"],
-#                 email=form.cleaned_data["email"],
-#                 first_name=form.cleaned_data["first_name"],
-#                 last_name=form.cleaned_data["last_name"],
-#                 password=form.cleaned_data["password1"]
-#             )
-
-#             rol_cliente, _ = Rol.objects.get_or_create(nombre="Cliente")
-
-#             PerfilUsuario.objects.create(
-#                 user=user,
-#                 identification=form.cleaned_data["identification"],
-#                 cellphonenumber=form.cleaned_data["cellphonenumber"],
-#                 rol=rol_cliente
-#             )
-
-#             messages.success(request, "Cuenta creada correctamente.")
-#             return redirect("login")
-
-#     else:
-#         form = RegistroForm()
-
-#     return render(request, "usuarios/register.html", {"form": form})
-
-
-
-
 def login_view(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -96,4 +64,10 @@ def login_view(request):
 
     return render(request, "usuarios/login.html")
 
+
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, "Has cerrado sesión correctamente.")
+    return redirect('home')
 

@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}IntegraServicios{% endblock %}</title>
+    
+    <!-- SB Admin 2 CSS -->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body id="page-top">
+    
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        
+        <!-- Sidebar (solo autenticados) -->
+        {% if user.is_authenticated %}
+            {% include 'core/sidebar.html' %}
+        {% endif %}
+        
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            
+            <!-- Main Content -->
+            <div id="content">
+                
+                <!-- Topbar -->
+                {% include 'core/topbar.html' %}
+                
+                <!-- Begin Page Content -->
+                <div class="container-fluid mt-4">
+                    
+                    <!-- Mensajes -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <!-- Contenido principal -->
+                    {% block content %}
+                    {% endblock %}
+                    
+                </div>
+                <!-- /.container-fluid -->
+                
+            </div>
+            <!-- End of Main Content -->
+            
+            <!-- Footer -->
+            {% include 'core/footer.html' %}
+            
+        </div>
+        <!-- End of Content Wrapper -->
+        
+    </div>
+    <!-- End of Page Wrapper -->
+    
+    <!-- Scroll to Top Button -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    
+    <!-- Bootstrap & jQuery -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    
+    <!-- SB Admin 2 JS -->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

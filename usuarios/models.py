@@ -17,27 +17,27 @@ class PerfilUsuario(models.Model):
     def __str__(self):
         return self.user.username
 
+    @property
+    def es_cliente(self):
+        return self.rol and self.rol.nombre == "Cliente"
+    
+    @property
+    def es_empleado(self):
+        return self.rol and self.rol.nombre == "Empleado"
+    
+    @property
+    def es_administrador(self):
+        return self.rol and self.rol.nombre == "Administrador"
+    
+    @property
+    def tipo_rol(self):
+        """Para usar en templates o lógica"""
+        if self.es_administrador:
+            return "administrador"
+        elif self.es_empleado:
+            return "empleado"
+        elif self.es_cliente:
+            return "cliente"
+        return "sin_rol"
 
-# from django.db import models
 
-# class Rol(models.Model):
-#     idRol = models.AutoField(primary_key=True)
-#     nombreROL = models.CharField(max_length=50)
-
-#     def __str__(self):
-#         return self.nombreROL
-
-
-# class Usuario(models.Model):
-#     idUsuario = models.BigAutoField(primary_key=True)
-#     idRol = models.ForeignKey(Rol, on_delete=models.CASCADE)
-
-#     identificacion = models.CharField(max_length=20)      
-#     nombre_usuario = models.CharField(max_length=50)
-#     nombre = models.CharField(max_length=100)
-#     correo = models.EmailField()
-#     celular = models.BigIntegerField()
-#     contraseña = models.CharField(max_length=128)
-
-#     def __str__(self):
-#         return self.nombre_usuario
