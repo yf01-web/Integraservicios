@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard Cliente - IntegraServicios{% endblock %}
+
+{% block content %}
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h1 class="h3 mb-0 text-gray-800">Dashboard Cliente</h1>
+        <p class="text-muted">Bienvenido, {{ user.first_name|default:user.username }}</p>
+    </div>
+    <span class="badge badge-success badge-pill p-2">
+        <i class="fas fa-user mr-1"></i> Rol: Cliente
+    </span>
+</div>
+
+<!-- Content Row - Estadísticas -->
+<div class="row">
+    <!-- Mis Reservas Activas -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Reservas Activas
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ mis_reservas_activas|default:"0" }}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-calendar-check fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reservas Pasadas -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Reservas Pasadas
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ mis_reservas_pasadas|default:"0" }}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-history fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calificaciones Pendientes -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Por Calificar
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            0
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-star fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recursos Disponibles -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Recursos Disponibles
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ recursos_recomendados|length|default:"0" }}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-box fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Acciones Rápidas -->
+<div class="row mb-4">
+    <div class="col-lg-12">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Acciones Rápidas</h6>
+            </div>
+            <div class="card-body text-center">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <a href="#" class="btn btn-primary btn-circle btn-xl d-flex align-items-center justify-content-center mx-auto" 
+                           style="width: 80px; height: 80px;">
+                            <i class="fas fa-calendar-plus fa-2x"></i>
+                        </a>
+                        <h6 class="mt-2 mb-1">Nueva Reserva</h6>
+                        <p class="text-muted small">Reservar un recurso disponible</p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="#" class="btn btn-success btn-circle btn-xl d-flex align-items-center justify-content-center mx-auto"
+                           style="width: 80px; height: 80px;">
+                            <i class="fas fa-history fa-2x"></i>
+                        </a>
+                        <h6 class="mt-2 mb-1">Mis Reservas</h6>
+                        <p class="text-muted small">Ver historial y activas</p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="#" class="btn btn-warning btn-circle btn-xl d-flex align-items-center justify-content-center mx-auto"
+                           style="width: 80px; height: 80px;">
+                            <i class="fas fa-star fa-2x"></i>
+                        </a>
+                        <h6 class="mt-2 mb-1">Calificar</h6>
+                        <p class="text-muted small">Calificar servicios recibidos</p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="#" class="btn btn-info btn-circle btn-xl d-flex align-items-center justify-content-center mx-auto"
+                           style="width: 80px; height: 80px;">
+                            <i class="fas fa-search fa-2x"></i>
+                        </a>
+                        <h6 class="mt-2 mb-1">Explorar</h6>
+                        <p class="text-muted small">Buscar recursos disponibles</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recursos Recomendados -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary">Recursos Recomendados para Ti</h6>
+                <a href="#" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-search mr-1"></i> Ver Todos
+                </a>
+            </div>
+            <div class="card-body">
+                {% if recursos_recomendados %}
+                <div class="row">
+                    {% for recurso in recursos_recomendados %}
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100 border-left-primary shadow-sm hover-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h6 class="font-weight-bold text-primary mb-0">{{ recurso.nombre }}</h6>
+                                    <span class="badge badge-success">Disponible</span>
+                                </div>
+                                <p class="small text-muted mb-2">
+                                    <i class="fas fa-tag mr-1"></i>
+                                    {{ recurso.idTipoRecurso.nombre|default:"Sin tipo" }}
+                                </p>
+                                <p class="card-text small text-truncate" title="{{ recurso.descripcion }}">
+                                    {{ recurso.descripcion|truncatechars:60 }}
+                                </p>
+                                {% if recurso.idTipoRecurso.idUnidad %}
+                                <p class="small text-muted mb-0">
+                                    <i class="fas fa-building mr-1"></i>
+                                    {{ recurso.idTipoRecurso.idUnidad.nombreUnidad }}
+                                </p>
+                                {% endif %}
+                            </div>
+                            <div class="card-footer bg-transparent text-center">
+                                <a href="#" class="btn btn-sm btn-primary btn-block">
+                                    <i class="fas fa-calendar-plus mr-1"></i> Reservar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-box-open fa-4x text-gray-300 mb-3"></i>
+                    <h5 class="text-gray-500">No hay recursos recomendados</h5>
+                    <p class="text-gray-400 mb-4">Explora todos los recursos disponibles en el catálogo.</p>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-search mr-2"></i> Explorar Recursos
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Información del Cliente -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Información de Tu Cuenta</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-primary"><i class="fas fa-user-circle mr-2"></i>Datos Personales</h6>
+                        <table class="table table-sm table-borderless">
+                            <tr>
+                                <td class="text-muted" width="40%">Nombre:</td>
+                                <td><strong>{{ user.get_full_name|default:"No especificado" }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Usuario:</td>
+                                <td><strong>{{ user.username }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Email:</td>
+                                <td><strong>{{ user.email|default:"No especificado" }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Identificación:</td>
+                                <td><strong>{{ user.perfilusuario.identification|default:"No especificada" }}</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-primary"><i class="fas fa-info-circle mr-2"></i>Información del Rol</h6>
+                        <div class="alert alert-light border">
+                            <p class="mb-2"><strong>Rol:</strong> Cliente</p>
+                            <p class="mb-0 small text-muted">
+                                Como cliente, puedes reservar recursos disponibles, ver tu historial de reservas 
+                                y calificar los servicios recibidos. Los empleados no pueden realizar reservas.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.hover-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+}
+</style>
+{% endblock %}

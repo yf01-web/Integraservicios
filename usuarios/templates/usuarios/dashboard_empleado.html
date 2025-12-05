@@ -1,0 +1,284 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard Empleado - IntegraServicios{% endblock %}
+
+{% block content %}
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h1 class="h3 mb-0 text-gray-800">Dashboard Empleado</h1>
+        <p class="text-muted">Bienvenido, {{ user.first_name|default:user.username }}</p>
+    </div>
+    <span class="badge badge-info badge-pill p-2">
+        <i class="fas fa-user-tie mr-1"></i> Rol: Empleado
+    </span>
+</div>
+
+<!-- Content Row - Estadísticas -->
+<div class="row">
+    <!-- Reservas Pendientes -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Reservas Pendientes
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ reservas_pendientes|default:"0" }}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-calendar-check fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Préstamos Activos -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Préstamos Activos
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ prestamos_activos|default:"0" }}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-handshake fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Devoluciones Pendientes -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Devoluciones Pendientes
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ devoluciones_pendientes|default:"0" }}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-undo fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reservas Hoy -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Reservas Hoy
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            0
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-calendar-day fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Acciones Rápidas -->
+<div class="row mb-4">
+    <div class="col-lg-12">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Operaciones del Día</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <div class="text-center">
+                            <a href="#" class="btn btn-primary btn-circle btn-xl d-flex align-items-center justify-content-center mx-auto"
+                               style="width: 80px; height: 80px;">
+                                <i class="fas fa-handshake fa-2x"></i>
+                            </a>
+                            <h6 class="mt-2 mb-1">Registrar Préstamo</h6>
+                            <p class="text-muted small">Entregar recurso al cliente</p>
+                            <span class="badge badge-danger">¡Importante!</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="text-center">
+                            <a href="#" class="btn btn-success btn-circle btn-xl d-flex align-items-center justify-content-center mx-auto"
+                               style="width: 80px; height: 80px;">
+                                <i class="fas fa-undo fa-2x"></i>
+                            </a>
+                            <h6 class="mt-2 mb-1">Registrar Devolución</h6>
+                            <p class="text-muted small">Recibir recurso del cliente</p>
+                            <span class="badge badge-warning">Pendientes: {{ devoluciones_pendientes|default:"0" }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="text-center">
+                            <a href="#" class="btn btn-info btn-circle btn-xl d-flex align-items-center justify-content-center mx-auto"
+                               style="width: 80px; height: 80px;">
+                                <i class="fas fa-calendar-day fa-2x"></i>
+                            </a>
+                            <h6 class="mt-2 mb-1">Reservas del Día</h6>
+                            <p class="text-muted small">Ver agenda de hoy</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="text-center">
+                            <a href="#" class="btn btn-warning btn-circle btn-xl d-flex align-items-center justify-content-center mx-auto"
+                               style="width: 80px; height: 80px;">
+                                <i class="fas fa-list fa-2x"></i>
+                            </a>
+                            <h6 class="mt-2 mb-1">Préstamos Activos</h6>
+                            <p class="text-muted small">Ver todos los préstamos</p>
+                            <span class="badge badge-primary">Activos: {{ prestamos_activos|default:"0" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tareas Pendientes -->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Próximas Reservas para Hoy</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Hora</th>
+                                <th>Recurso</th>
+                                <th>Cliente</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-4">
+                                    <i class="fas fa-calendar-times fa-2x mb-2"></i><br>
+                                    No hay reservas para hoy
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-2">
+                    <a href="#" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-sync-alt mr-1"></i> Actualizar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary">Instrucciones para Empleados</h6>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <h6><i class="fas fa-info-circle mr-2"></i>Reglas Importantes:</h6>
+                    <ul class="mb-0">
+                        <li>Registra préstamos dentro de ±5 minutos de la hora reservada</li>
+                        <li>Registra devoluciones dentro de ±5 minutos de la hora de fin</li>
+                        <li>Verifica el estado del recurso antes y después del préstamo</li>
+                        <li>No puedes realizar reservas como empleado</li>
+                    </ul>
+                </div>
+                <div class="alert alert-warning">
+                    <h6><i class="fas fa-exclamation-triangle mr-2"></i>Indicadores de Fallo:</h6>
+                    <p class="mb-0">Si el préstamo o devolución se registra fuera del lapso de 5 minutos, 
+                    el sistema marcará automáticamente un <strong>fallo de servicio</strong>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Información del Empleado -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Información del Empleado</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-primary"><i class="fas fa-id-card mr-2"></i>Datos del Empleado</h6>
+                        <table class="table table-sm table-borderless">
+                            <tr>
+                                <td class="text-muted" width="40%">Nombre:</td>
+                                <td><strong>{{ user.get_full_name|default:"No especificado" }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">ID Empleado:</td>
+                                <td><strong>{{ user.perfilusuario.identification|default:"No especificada" }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Teléfono:</td>
+                                <td><strong>{{ user.perfilusuario.cellphonenumber|default:"No especificado" }}</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-primary"><i class="fas fa-tasks mr-2"></i>Responsabilidades</h6>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex align-items-center py-2">
+                                <i class="fas fa-check-circle text-success mr-2"></i>
+                                <span>Registrar préstamos de recursos</span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center py-2">
+                                <i class="fas fa-check-circle text-success mr-2"></i>
+                                <span>Registrar devoluciones de recursos</span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center py-2">
+                                <i class="fas fa-check-circle text-success mr-2"></i>
+                                <span>Verificar estado de recursos</span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center py-2">
+                                <i class="fas fa-times-circle text-danger mr-2"></i>
+                                <span>No realizar reservas</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.list-group-item {
+    border: none;
+    padding-left: 0;
+}
+</style>
+{% endblock %}

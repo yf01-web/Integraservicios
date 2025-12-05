@@ -1,32 +1,34 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages  
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from datetime import date
 from recursos.models import Recurso
 from tipos.models import TipoRecurso
 from unidades.models import UnidadServicio
-from .decorators import cliente_requerido, empleado_requerido, administrador_requerido
+from usuarios.services import UsuarioService
 
 #home pagina publica antes de iniciar sesion (login) donde se muestra el catalogo de algunos recursos que 
 # presta el sistema interuniversitario IntegraServicios, es decir es una vista preliminar antes de loguearse
 
 def home(request):
     """
-    Página pública principal - muestra recursos destacados
+    Página pública principal
+    Si el usuario ya está autenticado, redirigir a su dashboard
     """
-    # Obtener 6 recursos disponibles para mostrar
+    # Si usuario ya está autenticado, redirigir a su dashboard
+    if request.user.is_authenticated:
+        # USAR SERVICIO
+        return UsuarioService.redirigir_segun_rol(request.user)
+    
+    # Usuario NO autenticado - mostrar home público
     recursos_destacados = Recurso.objects.select_related(
         'idTipoRecurso',
         'idTipoRecurso__idUnidad'
     ).filter(
-        estado='D'  # Solo disponibles
-    )[:6]  # Limitar a 6
+        estado='D'
+    )[:6]
     
-    # Obtener tipos de recursos para el filtro
     tipos_recurso = TipoRecurso.objects.all()[:4]
-    
-    # Obtener unidades de servicio
     unidades = UnidadServicio.objects.all()[:3]
     
     context = {

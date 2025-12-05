@@ -1,0 +1,317 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard Administrador - IntegraServicios{% endblock %}
+
+{% block content %}
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h1 class="h3 mb-0 text-gray-800">Panel de Administración</h1>
+        <p class="text-muted">Bienvenido, {{ user.first_name|default:user.username }}</p>
+    </div>
+    <span class="badge badge-primary badge-pill p-2">
+        <i class="fas fa-crown mr-1"></i> Rol: Administrador
+    </span>
+</div>
+
+<!-- Content Row - Estadísticas Globales -->
+<div class="row">
+    <!-- Usuarios Totales -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Usuarios Totales
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ total_usuarios|default:"0" }}
+                        </div>
+                        <div class="mt-2">
+                            <span class="badge badge-primary">Admin: 0</span>
+                            <span class="badge badge-info">Empleados: 0</span>
+                            <span class="badge badge-success">Clientes: 0</span>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-users fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recursos Totales -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Recursos Totales
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ total_recursos|default:"0" }}
+                        </div>
+                        <div class="mt-2">
+                            <span class="badge badge-success">Disponibles: 0</span>
+                            <span class="badge badge-danger">Ocupados: 0</span>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-boxes fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reservas Hoy -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Reservas Hoy
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ total_reservas_hoy|default:"0" }}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-calendar-day fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Préstamos Activos -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Préstamos Activos
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ total_prestamos_activos|default:"0" }}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-handshake fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Acciones de Administración -->
+<div class="row mb-4">
+    <div class="col-lg-12">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Gestión del Sistema</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <!-- Gestión de Usuarios -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-left-primary h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="bg-primary text-white rounded-circle p-3 mr-3">
+                                        <i class="fas fa-users fa-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0">Gestión de Usuarios</h5>
+                                        <p class="text-muted small mb-0">Administra usuarios y roles</p>
+                                    </div>
+                                </div>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <a href="#" class="text-decoration-none">
+                                            <i class="fas fa-user-plus text-success mr-2"></i>
+                                            Crear Nuevo Usuario
+                                        </a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <a href="#" class="text-decoration-none">
+                                            <i class="fas fa-list text-primary mr-2"></i>
+                                            Listar Todos los Usuarios
+                                        </a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <a href="#" class="text-decoration-none">
+                                            <i class="fas fa-user-shield text-warning mr-2"></i>
+                                            Asignar Roles
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gestión de Recursos -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-left-success h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="bg-success text-white rounded-circle p-3 mr-3">
+                                        <i class="fas fa-boxes fa-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0">Gestión de Recursos</h5>
+                                        <p class="text-muted small mb-0">Administra recursos y tipos</p>
+                                    </div>
+                                </div>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <a href="#" class="text-decoration-none">
+                                            <i class="fas fa-plus-circle text-success mr-2"></i>
+                                            Nuevo Recurso
+                                        </a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <a href="#" class="text-decoration-none">
+                                            <i class="fas fa-tags text-primary mr-2"></i>
+                                            Tipos de Recursos
+                                        </a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <a href="#" class="text-decoration-none">
+                                            <i class="fas fa-building text-info mr-2"></i>
+                                            Unidades de Servicio
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reportes y Configuración -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-left-warning h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="bg-warning text-white rounded-circle p-3 mr-3">
+                                        <i class="fas fa-chart-bar fa-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0">Reportes y Configuración</h5>
+                                        <p class="text-muted small mb-0">Estadísticas y ajustes</p>
+                                    </div>
+                                </div>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <a href="#" class="text-decoration-none">
+                                            <i class="fas fa-chart-line text-warning mr-2"></i>
+                                            Reportes de Uso
+                                        </a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <a href="#" class="text-decoration-none">
+                                            <i class="fas fa-cog text-secondary mr-2"></i>
+                                            Configuración del Sistema
+                                        </a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <a href="#" class="text-decoration-none">
+                                            <i class="fas fa-history text-info mr-2"></i>
+                                            Registro de Actividades
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Actividad Reciente y Alertas -->
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Actividad Reciente del Sistema</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Fecha/Hora</th>
+                                <th>Usuario</th>
+                                <th>Acción</th>
+                                <th>Detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-4">
+                                    <i class="fas fa-info-circle fa-2x mb-2"></i><br>
+                                    No hay actividad registrada recientemente
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Información del Administrador -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Información del Administrador</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-primary"><i class="fas fa-id-card mr-2"></i>Datos del Administrador</h6>
+                        <table class="table table-sm table-borderless">
+                            <tr>
+                                <td class="text-muted" width="40%">Nombre:</td>
+                                <td><strong>{{ user.get_full_name|default:"No especificado" }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">ID Administrador:</td>
+                                <td><strong>{{ user.perfilusuario.identification|default:"No especificada" }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Teléfono:</td>
+                                <td><strong>{{ user.perfilusuario.cellphonenumber|default:"No especificado" }}</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <!-- <div class="col-lg-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 bg-warning">
+                <h6 class="m-0 font-weight-bold text-white">Alertas del Sistema</h6>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-success">
+                    <h6><i class="fas fa-check-circle mr-2"></i>Sistema Operativo</h6>
+                    <p class="mb-0 small">Todos los servicios funcionan correctamente.</p>
+                </div>
+                <div class="alert alert-info">
+                    <h6><i class="fas fa-database mr-2"></i>Base de Datos</h6>
+                    <p class="mb-0 small">{{ total_usuarios }} usuarios y {{ total_recursos }} recursos -->
+{% endblock %}                        
