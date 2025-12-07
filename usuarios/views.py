@@ -26,9 +26,6 @@ def register_view(request):
             identification = form.cleaned_data.get("identification")
             cellphonenumber = form.cleaned_data.get("cellphonenumber")
 
-            print("cleaned_data:", form.cleaned_data)
-
-
             user = User.objects.create_user(
                 username=form.cleaned_data["username"],
                 email=form.cleaned_data["email"],
@@ -37,14 +34,13 @@ def register_view(request):
                 password=form.cleaned_data["password1"]
             )
 
-            rol_cliente, _ = Rol.objects.get_or_create(nombre="Cliente")
+            # Obtener el perfil creado automáticamente por la señal
+            perfil = user.perfilusuario
+            perfil.identification = identification
+            perfil.cellphonenumber = cellphonenumber
 
-            PerfilUsuario.objects.create(
-                user=user,
-                identification=identification,
-                cellphonenumber=cellphonenumber,
-                rol=rol_cliente
-            )
+            # Rol por defecto = Cliente (ya asignado por la señal)
+            perfil.save()
 
             messages.success(request, "Cuenta creada correctamente.")
             return redirect("login")
@@ -53,6 +49,7 @@ def register_view(request):
         form = RegistroForm()
 
     return render(request, "usuarios/register.html", {"form": form})
+
 
 
 def login_view(request):
