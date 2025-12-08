@@ -172,21 +172,27 @@
                                 </div>
                                 <ul class="list-unstyled">
                                     <li class="mb-2">
-                                        <a href="#" class="text-decoration-none">
+                                        <a href="{% url 'crear_recurso' %}" class="text-decoration-none">
                                             <i class="fas fa-plus-circle text-success mr-2"></i>
                                             Nuevo Recurso
                                         </a>
                                     </li>
                                     <li class="mb-2">
-                                        <a href="#" class="text-decoration-none">
+                                        <a href="{% url 'listar_tipos' %}" class="text-decoration-none">
                                             <i class="fas fa-tags text-primary mr-2"></i>
                                             Tipos de Recursos
                                         </a>
                                     </li>
                                     <li class="mb-2">
-                                        <a href="#" class="text-decoration-none">
+                                        <a href="{% url 'listar_unidades' %}" class="text-decoration-none">
                                             <i class="fas fa-building text-info mr-2"></i>
                                             Unidades de Servicio
+                                        </a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <a href="{% url 'listar_recursos' %}" class="text-decoration-none">
+                                            <i class="fas fa-boxes text-secondary mr-2"></i>
+                                            Listar Recursos
                                         </a>
                                     </li>
                                 </ul>
