@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalles del Recurso{% endblock %}
+
+{% block content %}
+
+<h2 class="h3 mb-4 text-gray-800">{{ recurso.nombre }}</h2>
+
+<div class="card shadow p-4">
+
+    <h5 class="text-primary">Información del recurso</h5>
+    <p><strong>Tipo:</strong> {{ recurso.idTipoRecurso.nombreTipo }}</p>
+    <p><strong>Unidad:</strong> {{ recurso.idTipoRecurso.idUnidad.nombreUnidad }}</p>
+    <p><strong>Horario:</strong>
+        {{ recurso.idTipoRecurso.idUnidad.horarioInicio }} –
+        {{ recurso.idTipoRecurso.idUnidad.horarioFin }}
+    </p>
+    <p><strong>Estado:</strong> {{ recurso.estado }}</p>
+    <p><strong>Descripción:</strong> {{ recurso.descripcion|default:"Sin descripción." }}</p>
+
+    {% if recurso.foto %}
+        <div class="mt-3">
+            <img src="{{ recurso.foto.url }}" class="img-fluid rounded shadow-sm" style="max-width: 300px;">
+        </div>
+    {% endif %}
+
+    <hr>
+
+    <a href="#" class="btn btn-primary disabled">
+        Reservar (pendiente)
+    </a>
+
+    <a href="javascript:history.back()" class="btn btn-secondary">
+        Volver
+    </a>
+
+</div>
+
+{% endblock %}
