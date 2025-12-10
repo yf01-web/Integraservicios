@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Catálogo de Recursos{% endblock %}
+
+{% block content %}
+
+<h1 class="h3 mb-4 text-gray-800">Catálogo de Recursos</h1>
+
+<!-- Filtros por tipo -->
+<div class="mb-4">
+    <a href="{% url 'catalogo_recursos' %}" 
+       class="btn btn-secondary btn-sm {% if not tipo_filtrado %}active{% endif %}">
+        Todos
+    </a>
+
+    {% for t in tipos %}
+        <a href="?tipo={{ t.idTipo }}"
+           class="btn btn-primary btn-sm {% if tipo_filtrado == t.idTipo|stringformat:"s" %}active{% endif %}">
+            {{ t.nombreTipo }}
+        </a>
+    {% endfor %}
+</div>
+
+<!-- Grid de recursos -->
+<div class="row">
+    {% for r in recursos %}
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+
+            <div class="card-body">
+                <h5 class="font-weight-bold">{{ r.nombre }}</h5>
+
+                <p class="text-muted mb-1"><strong>Tipo:</strong>
+                    {{ r.idTipoRecurso.nombreTipo }}
+                </p>
+
+                <p class="text-muted mb-1"><strong>Unidad:</strong>
+                    {{ r.idTipoRecurso.idUnidad.nombreUnidad }}
+                </p>
+
+                <p class="text-muted mb-1"><strong>Horario:</strong>
+                    {{ r.idTipoRecurso.idUnidad.horarioInicio }}
+                    -
+                    {{ r.idTipoRecurso.idUnidad.horarioFin }}
+                </p>
+
+                <p>
+                    <span class="badge
+                        {% if r.estado == 'Disponible' %}badge-success
+                        {% else %}badge-danger{% endif %}">
+                        {{ r.estado }}
+                    </span>
+                </p>
+
+                <a href="{% url 'detalle_recurso' r.idRecurso %}" class="btn btn-info btn-sm btn-block">
+                    Ver detalles
+                </a>
+            </div>
+
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <p class="text-muted text-center">No hay recursos disponibles.</p>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

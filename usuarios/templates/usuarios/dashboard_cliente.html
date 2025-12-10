@@ -136,12 +136,13 @@
                         <p class="text-muted small">Calificar servicios recibidos</p>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <a href="#" class="btn btn-info btn-circle btn-xl d-flex align-items-center justify-content-center mx-auto"
-                           style="width: 80px; height: 80px;">
+                        <a href="{% url 'catalogo_recursos' %}"
+                            class="btn btn-info btn-circle btn-xl d-flex align-items-center justify-content-center mx-auto"
+                            style="width: 80px; height: 80px;">
                             <i class="fas fa-search fa-2x"></i>
                         </a>
-                        <h6 class="mt-2 mb-1">Explorar</h6>
-                        <p class="text-muted small">Buscar recursos disponibles</p>
+                        <h6 class="mt-2 mb-1">Explorar Recursos</h6>
+                        <p class="text-muted small">Catálogo de todos los recursos disponibles</p>
                     </div>
                 </div>
             </div>
@@ -155,7 +156,7 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h6 class="m-0 font-weight-bold text-primary">Recursos Recomendados para Ti</h6>
-                <a href="#" class="btn btn-sm btn-outline-primary">
+                <a href="{% url 'catalogo_recursos' %}" class="btn btn-sm btn-outline-primary">
                     <i class="fas fa-search mr-1"></i> Ver Todos
                 </a>
             </div>
